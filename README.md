@@ -1,24 +1,50 @@
-# kl15_monitor
-external kl15 monitor to automatically shut down the controller
+# go-auto-shutdown
 
-To build on any system using zig run
+Automatic controller shutdown service for GOcontroll Moduline controllers based on the KL15 ignition signal.
+
+## Description
+
+`go-auto-shutdown` monitors the KL15 ignition input(s) of the controller. When no KL15 signal is detected and no application is actively managing the controller shutdown (such as a Simulink model via `go-simulink`), this service will automatically shut down the controller.
+
+This prevents the controller from remaining powered unnecessarily when the vehicle ignition is switched off, without requiring the running application to explicitly handle the shutdown condition.
+
+If `go-simulink` is active, `go-auto-shutdown` assumes that the running application is responsible for conditionally shutting down the controller, and backs off to a lower polling rate.
+
+Supported hardware:
+- Moduline IV (3x KL15 inputs)
+- Moduline Mini (3x KL15 inputs)
+- Moduline Display (1x KL15 input)
+
+## Build
+
+Cross-compile for ARM64 using Zig:
 ```sh
 zig build
 ```
-The binary will be in zig-out/bin/
+The binary will be in `zig-out/bin/`.
 
-To build with gcc, proper compiler and set it up, enter the directory and run make.
-Make sure your compiler doesn't contain a glibc version greater than 2.31
-
+To build with gcc (requires ARM64 cross-compiler and libiio):
+```sh
+make
+```
 
 ## Usage
 
-arguments: 0 = moduline iv, 1 = moduline mini, 2 = moduline display.
+The controller type is auto-detected from the device tree. Optionally pass it as an argument:
+```
+go-auto-shutdown [type]
+```
+- `0` = Moduline IV
+- `1` = Moduline Mini
+- `2` = Moduline Display
 
 ## Changelog
 
-from V1.1.0
-added a build.zig to cross compile from any platform
+### v1.2.0
+- Auto-detect controller type from device tree (argument now optional)
 
-V1.0.0
-put libiio.so.0 in /usr/lib/aarch64-linux-gnu/
+### v1.1.0
+- Added `build.zig` for cross-compilation from any platform
+
+### v1.0.0
+- Initial release

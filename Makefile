@@ -8,13 +8,13 @@ LIBS = -liio
 $(ODIR)/%.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
 
-kl15_monitor: $(OBJ)
+go-auto-shutdown: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
-install: kl15_monitor
-	install -Dm644 kl15_monitor $(DESTDIR)/usr/bin/kl15_monitor
+install: go-auto-shutdown
+	install -Dm755 go-auto-shutdown $(DESTDIR)/usr/bin/go-auto-shutdown
 
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o *~ core
+	rm -f $(ODIR)/*.o *~ core go-auto-shutdown

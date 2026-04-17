@@ -2,7 +2,7 @@ const std = @import("std");
 
 pub fn build(b: *std.Build) !void {
     const exe = b.addExecutable(.{
-        .name = "kl15_monitor",
+        .name = "go-auto-shutdown",
         .root_source_file = .{ .path = "main.c" },
         .target = std.zig.CrossTarget{
             .os_tag = .linux,
@@ -10,7 +10,7 @@ pub fn build(b: *std.Build) !void {
             .abi = .gnu,
             .glibc_version = std.SemanticVersion{ .major = 2, .minor = 31, .patch = 0 },
         },
-        .version = .{ .major = 1, .minor = 1, .patch = 0 },
+        .version = .{ .major = 1, .minor = 2, .patch = 0 },
         .optimize = std.builtin.OptimizeMode.ReleaseSmall,
     });
 

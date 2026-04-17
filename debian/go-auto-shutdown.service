@@ -1,11 +1,11 @@
 [Unit]
-Description=GOcontroll KL15 monitoring service
+Description=GOcontroll automatic shutdown service
+After=go-simulink.service
 
 [Service]
 Type=exec
 RemainAfterExit=no
-
-ExecStart=/usr/bin/kl15_monitor
+ExecStart=/usr/bin/go-auto-shutdown
 
 [Install]
 WantedBy=multi-user.target
