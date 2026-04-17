@@ -51,10 +51,9 @@ jobs:
       - name: Build
         run: |
           aarch64-linux-gnu-gcc -o go-auto-shutdown main.c \
-            -liio \
-            --sysroot=/usr/aarch64-linux-gnu \
-            -I/usr/aarch64-linux-gnu/include \
-            -L/usr/aarch64-linux-gnu/lib
+            -I/usr/include \
+            -L/usr/lib/aarch64-linux-gnu \
+            -liio
 
       - name: Build .deb
         run: |
