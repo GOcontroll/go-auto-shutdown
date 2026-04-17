@@ -19,17 +19,34 @@ jobs:
 
       - name: Install build dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc-aarch64-linux-gnu dpkg-dev
           sudo dpkg --add-architecture arm64
-          sudo sed -i 's/^deb /deb [arch=amd64] /;s/^deb \[arch=amd64\] \[/deb [/' \
-            /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null || true
-          CODENAME=$(lsb_release -cs)
-          printf 'deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports %s main universe\n' \
-            "$CODENAME" "${CODENAME}-updates" "${CODENAME}-security" \
-            | sudo tee /etc/apt/sources.list.d/arm64-ports.list
+
+          sudo rm -f /etc/apt/sources.list.d/ubuntu.sources
+          sudo tee /etc/apt/sources.list.d/ubuntu.sources > /dev/null << 'SOURCES'
+          Types: deb
+          URIs: http://archive.ubuntu.com/ubuntu
+          Suites: noble noble-updates noble-backports
+          Components: main universe restricted multiverse
+          Architectures: amd64
+          Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+          Types: deb
+          URIs: http://security.ubuntu.com/ubuntu
+          Suites: noble-security
+          Components: main universe restricted multiverse
+          Architectures: amd64
+          Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+          Types: deb
+          URIs: http://ports.ubuntu.com/ubuntu-ports
+          Suites: noble noble-updates noble-security
+          Components: main universe
+          Architectures: arm64
+          Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+          SOURCES
+
           sudo apt-get update
-          sudo apt-get install -y libiio-dev:arm64
+          sudo apt-get install -y gcc-aarch64-linux-gnu dpkg-dev libiio-dev:arm64
 
       - name: Build
         run: |
