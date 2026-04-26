@@ -51,14 +51,17 @@ int get_gocontroll_type() {
 		return -1;
 	}
 
-	if (strstr(modelbuff, "Moduline IV") != NULL) {
-		printf("detected: Moduline IV\n");
+	if (strstr(modelbuff, "Moduline IV") != NULL || strstr(modelbuff, "Moduline L4") != NULL) {
+		printf("detected: Moduline L4
+");
 		ret = MODULINE4;
-	} else if (strstr(modelbuff, "Moduline Mini") != NULL) {
-		printf("detected: Moduline Mini\n");
+	} else if (strstr(modelbuff, "Moduline Mini") != NULL || strstr(modelbuff, "Moduline M1") != NULL) {
+		printf("detected: Moduline M1
+");
 		ret = MODULINEMINI;
-	} else if (strstr(modelbuff, "Moduline Display") != NULL) {
-		printf("detected: Moduline Display\n");
+	} else if (strstr(modelbuff, "Moduline Display") != NULL || strstr(modelbuff, "Moduline HMI1") != NULL) {
+		printf("detected: Moduline HMI1
+");
 		ret = MODULINEDISP;
 	} else {
 		modelbuff[sizeof(modelbuff)-1] = 0;
@@ -71,7 +74,8 @@ int get_gocontroll_type() {
 		
 
 int main(int argc, char** argv){
-    printf("V1.2.0\n");
+    printf("V1.2.1
+");
     uint8_t count = 0;
     int type;
     //get the controller type from the argument
