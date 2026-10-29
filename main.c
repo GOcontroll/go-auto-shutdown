@@ -6,6 +6,11 @@
 #include <string.h>
 #include <errno.h>
 
+/* CI passes -DGO_VERSION from the git tag; this default is for local builds. */
+#ifndef GO_VERSION
+#define GO_VERSION "dev"
+#endif
+
 #define MODULINE4 0
 #define MODULINEMINI 1
 #define MODULINEDISP 2
@@ -71,7 +76,7 @@ int get_gocontroll_type() {
 		
 
 int main(int argc, char** argv){
-    printf("V1.2.1\n");
+    printf("V%s\n", GO_VERSION);
     uint8_t count = 0;
     int type;
     //get the controller type from the argument

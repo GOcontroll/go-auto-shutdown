@@ -53,6 +53,7 @@ jobs:
       - name: Build
         run: |
           aarch64-linux-gnu-gcc -o go-auto-shutdown main.c \
+            -DGO_VERSION="\"${{ steps.version.outputs.version }}\"" \
             -I/usr/include \
             -L/usr/lib/aarch64-linux-gnu \
             -liio
