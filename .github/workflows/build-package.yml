@@ -7,7 +7,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Pinned: the arm64 cross-toolchain below comes from the noble sources, which
+    # do not install on the Ubuntu 26 image that ubuntu-latest now points to.
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
